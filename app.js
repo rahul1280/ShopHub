@@ -61,6 +61,9 @@ const translations = {
     your_email: "Your Email",
     your_message: "Your Message",
     feedback_placeholder: "Your feedback...",
+    add_to_cart: "Add to Cart",
+    added_to_cart: "Added",
+    cart_empty: "Your cart is empty"
   },
   hi: {
     home: "मुख्य पृष्ठ",
@@ -121,6 +124,9 @@ const translations = {
     your_email: "आपका ईमेल",
     your_message: "आपका संदेश",
     feedback_placeholder: "आपकी प्रतिक्रिया...",
+    add_to_cart: "कार्ट में जोड़ें",
+    added_to_cart: "जोड़ा गया",
+    cart_empty: "आपका कार्ट खाली है"
   },
   bn: {
     home: "হোম",
@@ -181,6 +187,9 @@ const translations = {
     your_email: "আপনার ইমেল",
     your_message: "আপনার বার্তা",
     feedback_placeholder: "আপনার প্রতিক্রিয়া...",
+    add_to_cart: "কার্টে যোগ করুন",
+    added_to_cart: "যোগ করা হয়েছে",
+    cart_empty: "আপনার কার্ট খালি"
   },
   fr: {
     home: "Accueil",
@@ -241,6 +250,9 @@ const translations = {
     your_email: "Votre email",
     your_message: "Votre message",
     feedback_placeholder: "Vos commentaires...",
+    add_to_cart: "Ajouter au panier",
+    added_to_cart: "Ajouté",
+    cart_empty: "Votre panier est vide"
   },
   es: {
     home: "Inicio",
@@ -284,8 +296,7 @@ const translations = {
     feedback: "Califica tu experiencia",
     faq: "Preguntas frecuentes",
     faq1_q: "¿Cómo sigo mi pedido?",
-    faq1_a:
-      "Puede rastrear su pedido utilizando el número de seguimiento enviado a su correo electrónico después de la compra.",
+    faq1_a: "Puede rastrear su pedido utilizando el número de seguimiento enviado a su correo electrónico después de la compra.",
     faq2_q: "¿Cuál es su política de devoluciones?",
     faq2_a: "Ofrecemos una política de devolución de 30 días para todos los artículos en condición original.",
     faq3_q: "¿Ofrecen envío gratis?",
@@ -302,6 +313,9 @@ const translations = {
     your_email: "Tu correo electrónico",
     your_message: "Tu mensaje",
     feedback_placeholder: "Tus comentarios...",
+    add_to_cart: "Añadir al carrito",
+    added_to_cart: "Añadido",
+    cart_empty: "Tu carrito está vacío"
   },
 }
 
@@ -309,78 +323,14 @@ const translations = {
 // SAMPLE PRODUCTS DATA
 // ============================================
 const products = [
-  {
-    id: 1,
-    title: "Premium Headphones",
-    price: 2999,
-    location: "New York",
-    quality: "Premium",
-    rating: 5,
-    image: "public/premium-headphones.jpg",
-  },
-  {
-    id: 2,
-    title: "Wireless Mouse",
-    price: 999,
-    location: "Los Angeles",
-    quality: "Standard",
-    rating: 4,
-    image: "public/wireless-mouse.jpg",
-  },
-  {
-    id: 3,
-    title: "USB-C Cable",
-    price: 499,
-    location: "Chicago",
-    quality: "Economy",
-    rating: 4,
-    image: "public/usb-c-cable.jpg",
-  },
-  {
-    id: 4,
-    title: "Laptop Stand",
-    price: 1999,
-    location: "New York",
-    quality: "Premium",
-    rating: 5,
-    image: "public/laptop-stand.jpg",
-  },
-  {
-    id: 5,
-    title: "Phone Screen Protector",
-    price: 299,
-    location: "Los Angeles",
-    quality: "Standard",
-    rating: 3,
-    image: "public/screen-protector.png",
-  },
-  {
-    id: 6,
-    title: "Portable Charger",
-    price: 1499,
-    location: "Chicago",
-    quality: "Premium",
-    rating: 5,
-    image: "public/portable-charger.jpg",
-  },
-  {
-    id: 7,
-    title: "Keyboard",
-    price: 3499,
-    location: "New York",
-    quality: "Premium",
-    rating: 5,
-    image: "public/mechanical-keyboard.png",
-  },
-  {
-    id: 8,
-    title: "Monitor",
-    price: 8999,
-    location: "Los Angeles",
-    quality: "Premium",
-    rating: 4,
-    image: "public/computer-monitor.png",
-  },
+  { id: 1, title: "Premium Headphones", price: 2999, location: "New York", quality: "Premium", rating: 5, image: "public/premium-headphones.jpg" },
+  { id: 2, title: "Wireless Mouse", price: 999, location: "Los Angeles", quality: "Standard", rating: 4, image: "public/wireless-mouse.jpg" },
+  { id: 3, title: "USB-C Cable", price: 499, location: "Chicago", quality: "Economy", rating: 4, image: "public/usb-c-cable.jpg" },
+  { id: 4, title: "Laptop Stand", price: 1999, location: "New York", quality: "Premium", rating: 5, image: "public/laptop-stand.jpg" },
+  { id: 5, title: "Phone Screen Protector", price: 299, location: "Los Angeles", quality: "Standard", rating: 3, image: "public/screen-protector.png" },
+  { id: 6, title: "Portable Charger", price: 1499, location: "Chicago", quality: "Premium", rating: 5, image: "public/portable-charger.jpg" },
+  { id: 7, title: "Keyboard", price: 3499, location: "New York", quality: "Premium", rating: 5, image: "public/mechanical-keyboard.png" },
+  { id: 8, title: "Monitor", price: 8999, location: "Los Angeles", quality: "Premium", rating: 4, image: "public/computer-monitor.png" },
 ]
 
 let currentLanguage = localStorage.getItem("language") || "en"
@@ -411,6 +361,18 @@ function t(key) {
 }
 
 // ============================================
+// AVATAR UPDATE
+// ============================================
+function updateAvatar() {
+  const $avatar = $("#avatarImg")
+  if (currentUser && currentUser.avatar) {
+    $avatar.attr("src", currentUser.avatar)
+  } else {
+    $avatar.attr("src", "public/default-avatar.png")
+  }
+}
+
+// ============================================
 // THEME TOGGLE
 // ============================================
 function initTheme() {
@@ -435,38 +397,15 @@ $("#languageSelect").change(function () {
   currentLanguage = $(this).val()
   localStorage.setItem("language", currentLanguage)
   updateUIText()
+  renderProducts()
 })
 
 // ============================================
-// PRODUCTS RENDERING
+// CART FUNCTIONALITY
 // ============================================
-function renderProducts(productsToShow = products) {
-  $("#productsList").empty()
-
-  productsToShow.forEach((product) => {
-    const stars = "★".repeat(product.rating) + "☆".repeat(5 - product.rating)
-    const productHTML = `
-            <div class="product-card">
-                <img src="${product.image}" alt="${product.title}" class="product-image">
-                <div class="product-content">
-                    <h3 class="product-title">${product.title}</h3>
-                    <p class="product-location">${product.location}</p>
-                    <span class="product-quality">${product.quality}</span>
-                    <div class="product-rating">${stars}</div>
-                    <div class="product-price">₹${product.price}</div>
-                    <div class="product-actions">
-                        <button class="btn btn-primary add-to-cart" data-id="${product.id}">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-        `
-    $("#productsList").append(productHTML)
-  })
-
-  $(".add-to-cart").click(function () {
-    const productId = $(this).data("id")
-    addToCart(productId)
-  })
+function updateCartCount() {
+  const total = cart.reduce((sum, i) => sum + i.quantity, 0)
+  $("#cartCount").text(total)
 }
 
 function addToCart(productId) {
@@ -475,99 +414,150 @@ function addToCart(productId) {
     return
   }
 
-  const product = products.find((p) => p.id === productId)
-  const existingItem = cart.find((item) => item.id === productId)
+  const product = products.find(p => p.id === productId)
+  const existing = cart.find(i => i.id === productId)
 
-  if (existingItem) {
-    existingItem.quantity++
-  } else {
-    cart.push({ ...product, quantity: 1 })
-  }
+  if (existing) existing.quantity++
+  else cart.push({ ...product, quantity: 1 })
 
   localStorage.setItem("cart", JSON.stringify(cart))
   updateCartCount()
-  showNotification("Added to cart successfully!")
+  renderProducts()
 }
 
-function updateCartCount() {
-  const count = cart.reduce((sum, item) => sum + item.quantity, 0)
-  $("#cartCount").text(count)
+function renderCartModal() {
+  const $items = $("#cartItems").empty()
+  const $total = $("#cartTotal")
+
+  if (cart.length === 0) {
+    $items.append(`<p class="empty-cart" style="text-align:center; color:var(--text-light); padding:20px;">${t('cart_empty')}</p>`)
+    $("#proceedCheckout").prop('disabled', true)
+    $total.text('₹0')
+    return
+  }
+
+  let grandTotal = 0
+  cart.forEach(item => {
+    const lineTotal = item.price * item.quantity
+    grandTotal += lineTotal
+
+    const $row = $(`
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-title">${item.title}</div>
+          <div class="cart-item-price">₹${lineTotal}</div>
+        </div>
+        <div class="quantity-controls">
+          <button class="qty-btn minus" data-id="${item.id}">-</button>
+          <span class="qty">${item.quantity}</span>
+          <button class="qty-btn plus" data-id="${item.id}">+</button>
+        </div>
+        <button class="remove-btn" data-id="${item.id}"><i class="fas fa-trash"></i></button>
+      </div>
+    `)
+    $items.append($row)
+  })
+
+  $total.text('₹' + grandTotal)
+  $("#proceedCheckout").prop('disabled', false)
 }
 
-function showNotification(message) {
-  alert(message)
-}
-
-// ============================================
-// CART FUNCTIONALITY
-// ============================================
-$("#cartBtn").click(() => {
+$("#cartBtn").on('click', () => {
   if (!currentUser) {
     showAuthModal()
     return
   }
-  showCartModal()
+  renderCartModal()
+  $("#cartModal").fadeIn()
 })
 
-function showCartModal() {
-  const cartItemsHTML = cart
-    .map(
-      (item) => `
-        <div class="cart-item">
-            <div class="cart-item-info">
-                <div class="cart-item-title">${item.title}</div>
-                <div>Qty: ${item.quantity}</div>
-                <div class="cart-item-price">₹${item.price * item.quantity}</div>
-            </div>
-            <button class="remove-btn" data-id="${item.id}"><i class="fas fa-trash"></i></button>
-        </div>
-    `,
-    )
-    .join("")
+$("#cartItems").on('click', '.qty-btn', function () {
+  const id = $(this).data('id')
+  const item = cart.find(i => i.id === id)
+  if (!item) return
 
-  $("#cartItems").html(cartItemsHTML)
+  if ($(this).hasClass('plus')) item.quantity++
+  if ($(this).hasClass('minus')) item.quantity = Math.max(1, item.quantity - 1)
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  $("#cartTotal").text("₹" + total)
+  saveCartAndRefresh()
+})
 
-  $(".remove-btn").click(function () {
-    const productId = $(this).data("id")
-    cart = cart.filter((item) => item.id !== productId)
-    localStorage.setItem("cart", JSON.stringify(cart))
-    updateCartCount()
-    showCartModal()
-  })
+$("#cartItems").on('click', '.remove-btn', function () {
+  const id = $(this).data('id')
+  cart = cart.filter(i => i.id !== id)
+  saveCartAndRefresh()
+})
 
-  $("#cartModal").fadeIn()
+function saveCartAndRefresh() {
+  localStorage.setItem("cart", JSON.stringify(cart))
+  updateCartCount()
+  renderCartModal()
+  renderProducts()
 }
 
-$("#proceedCheckout").click(() => {
+$("#proceedCheckout").on('click', () => {
+  if (cart.length === 0) return
   $("#cartModal").fadeOut()
   $("#checkoutModal").fadeIn()
 })
 
 // ============================================
-// CHECKOUT FUNCTIONALITY
+// PRODUCTS RENDERING
+// ============================================
+function renderProducts(productsToShow = products) {
+  $("#productsList").empty()
+
+  productsToShow.forEach(p => {
+    const inCart = cart.find(i => i.id === p.id)
+    const btnClass = inCart ? 'btn-success' : 'btn-primary'
+    const btnText = inCart ? t('added_to_cart') : t('add_to_cart')
+    const stars = "★".repeat(p.rating) + "☆".repeat(5 - p.rating)
+
+    const html = `
+      <div class="product-card">
+        <img src="${p.image}" alt="${p.title}" class="product-image">
+        <div class="product-content">
+          <h3 class="product-title">${p.title}</h3>
+          <p class="product-location">${p.location}</p>
+          <span class="product-quality">${p.quality}</span>
+          <div class="product-rating">${stars}</div>
+          <div class="product-price">₹${p.price}</div>
+          <div class="product-actions">
+            <button class="btn add-to-cart ${btnClass}" data-id="${p.id}">${btnText}</button>
+          </div>
+        </div>
+      </div>`
+    $("#productsList").append(html)
+  })
+
+  $(".add-to-cart").off('click').on('click', function () {
+    const id = $(this).data('id')
+    addToCart(id)
+  })
+}
+
+// ============================================
+// CHECKOUT
 // ============================================
 $("#addressForm").submit((e) => {
   e.preventDefault()
   const address = $("#addressInput").val()
   $("#paymentOptions").slideDown()
-  showNotification("Address confirmed: " + address)
 })
 
-$("#placeOrder").click(() => {
+$("#placeOrder").on('click', () => {
   const payment = $('input[name="payment"]:checked').val()
   if (!payment) {
     alert("Please select a payment method")
     return
   }
-  alert("Order placed successfully! Payment method: " + payment)
+  alert(`Order placed successfully! Payment: ${payment}`)
   cart = []
   localStorage.setItem("cart", JSON.stringify(cart))
   updateCartCount()
   $("#checkoutModal").fadeOut()
   $("#paymentOptions").slideUp()
+  renderCartModal()
 })
 
 // ============================================
@@ -619,7 +609,7 @@ $("#loginForm").submit((e) => {
     currentUser = user
     localStorage.setItem("currentUser", JSON.stringify(user))
     $("#authModal").fadeOut()
-    $("#userBtn").html('<i class="fas fa-user"></i>')
+    updateAvatar()
     updateUIText()
   } else {
     $("#loginError").text("Invalid credentials!")
@@ -640,7 +630,7 @@ $("#registerForm").submit((e) => {
     return
   }
 
-  const newUser = { name, email, phone, password, address: "" }
+  const newUser = { name, email, phone, password, address: "", avatar: "" }
   users.push(newUser)
   localStorage.setItem("users", JSON.stringify(users))
 
@@ -648,6 +638,7 @@ $("#registerForm").submit((e) => {
   localStorage.setItem("currentUser", JSON.stringify(newUser))
   $("#authModal").fadeOut()
   $("#registerForm")[0].reset()
+  updateAvatar()
   updateUIText()
 })
 
@@ -658,6 +649,8 @@ $("#logoutBtn").click(() => {
   localStorage.setItem("cart", JSON.stringify(cart))
   updateCartCount()
   $("#profileModal").fadeOut()
+  renderProducts()
+  updateAvatar()
   updateUIText()
 })
 
@@ -676,48 +669,49 @@ $("#saveProfile").click(() => {
   $("#profileModal").fadeOut()
 })
 
+// Optional: Avatar upload (if you added the input in HTML)
+$(document).on("change", "#avatarUpload", function(e) {
+  const file = e.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = function(ev) {
+    const dataUrl = ev.target.result
+    currentUser.avatar = dataUrl
+    localStorage.setItem("currentUser", JSON.stringify(currentUser))
+    updateAvatar()
+    $("#avatarPreview").attr("src", dataUrl).show()
+  }
+  reader.readAsDataURL(file)
+})
+
 // ============================================
 // FILTERING
 // ============================================
 function applyFilters() {
   let filtered = [...products]
-
   const location = $("#locationFilter").val()
   const quality = $("#qualityFilter").val()
   const priceSort = $("#priceFilter").val()
   const rating = $("#ratingFilter").val()
 
-  if (location) {
-    filtered = filtered.filter((p) => p.location === location)
-  }
+  if (location) filtered = filtered.filter(p => p.location === location)
+  if (quality) filtered = filtered.filter(p => p.quality === quality)
+  if (rating) filtered = filtered.filter(p => p.rating >= Number.parseInt(rating))
 
-  if (quality) {
-    filtered = filtered.filter((p) => p.quality === quality)
-  }
-
-  if (rating) {
-    filtered = filtered.filter((p) => p.rating >= Number.parseInt(rating))
-  }
-
-  if (priceSort === "low-high") {
-    filtered.sort((a, b) => a.price - b.price)
-  } else if (priceSort === "high-low") {
-    filtered.sort((a, b) => b.price - a.price)
-  }
+  if (priceSort === "low-high") filtered.sort((a, b) => a.price - b.price)
+  else if (priceSort === "high-low") filtered.sort((a, b) => b.price - a.price)
 
   renderProducts(filtered)
 }
 
-$("#locationFilter, #qualityFilter, #priceFilter, #ratingFilter").change(() => {
-  applyFilters()
-})
+$("#locationFilter, #qualityFilter, #priceFilter, #ratingFilter").change(applyFilters)
 
 // ============================================
-// SEARCH FUNCTIONALITY
+// SEARCH
 // ============================================
 $("#searchInput").on("keyup", function () {
   const searchTerm = $(this).val().toLowerCase()
-  const filtered = products.filter((p) => p.title.toLowerCase().includes(searchTerm))
+  const filtered = products.filter(p => p.title.toLowerCase().includes(searchTerm))
   renderProducts(filtered)
 })
 
@@ -736,11 +730,7 @@ $(".contact-form").submit(function (e) {
 $(".star-rating i").click(function () {
   const rating = $(this).data("rating")
   $(".star-rating i").each(function () {
-    if ($(this).data("rating") <= rating) {
-      $(this).addClass("active")
-    } else {
-      $(this).removeClass("active")
-    }
+    $(this).toggleClass("active", $(this).data("rating") <= rating)
   })
 })
 
@@ -779,4 +769,5 @@ $(document).ready(() => {
   updateUIText()
   renderProducts()
   updateCartCount()
+  updateAvatar()
 })
