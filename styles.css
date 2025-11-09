@@ -371,8 +371,16 @@ body {
 .product-image {
     width: 100%;
     height: 200px;
+    /* Fixed height for consistency */
     object-fit: cover;
-    background-color: var(--secondary);
+    /* Crop to fill without distortion */
+    background-color: #f0f0f0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
 }
 
 .product-content {
@@ -450,6 +458,11 @@ body {
 
 .btn-secondary:hover {
     background-color: var(--border);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745, #218838) !important;
+    color: white !important;
 }
 
 /* Modal Styles */
@@ -539,6 +552,73 @@ body {
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-md);
+}
+
+/* ---------- QUANTITY CONTROLS (inside cart) ---------- */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 2px;
+    width: fit-content;
+}
+
+.qty-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dark);
+    font-size: 16px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: var(--radius-sm);
+}
+
+.qty-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.qty {
+    min-width: 24px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* ---------- PROFILE AVATAR (top nav) ---------- */
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    overflow: hidden;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.08);
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .cart-item-info {
