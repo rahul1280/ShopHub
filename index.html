@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
@@ -15,23 +17,23 @@
                 <i class="fas fa-shopping-bag"></i>
                 <span class="logo-text">ShopHub</span>
             </div>
-            
+
             <div class="nav-search">
                 <input type="text" id="searchInput" placeholder="Search products..." class="search-input">
                 <button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
-            
+
             <div class="nav-menu">
                 <a href="#home" class="nav-link" data-lang="home">Home</a>
                 <a href="#products" class="nav-link" data-lang="products">Products</a>
                 <a href="#contact" class="nav-link" data-lang="contact">Contact</a>
             </div>
-            
+
             <div class="nav-actions">
                 <button id="themeToggle" class="nav-btn" title="Toggle Theme">
                     <i class="fas fa-moon"></i>
                 </button>
-                
+
                 <div class="language-selector">
                     <select id="languageSelect">
                         <option value="en">English</option>
@@ -41,16 +43,20 @@
                         <option value="es">Spanish</option>
                     </select>
                 </div>
-                
+
+                <!-- Cart button (icon only) -->
                 <button id="cartBtn" class="nav-btn cart-btn" data-lang="cart">
                     <i class="fas fa-shopping-cart"></i>
                     <span id="cartCount" class="cart-count">0</span>
                 </button>
-                
-                <button id="userBtn" class="nav-btn user-btn" data-lang="account">
-                    <i class="fas fa-user"></i>
-                </button>
-                
+
+                <!-- Profile button (avatar only) -->
+                <div id="userBtn" class="nav-btn user-btn" data-lang="account" title="Account">
+                    <div class="user-avatar">
+                        <img id="avatarImg" src="public/default-avatar.png" alt="Avatar">
+                    </div>
+                </div>
+
                 <button class="hamburger" id="hamburger">
                     <span></span>
                     <span></span>
@@ -68,7 +74,7 @@
             <button class="hero-btn" data-lang="shop_now">Shop Now</button>
         </div>
         <div class="hero-image">
-            <img src="" height=400 width=600 alt="Shopping">
+            <img src="public/laptop.png" height=500 width=400 alt="Shopping">
             <!-- <img src="/placeholder.svg?height=400&width=600" alt="Shopping"> -->
         </div>
     </section>
@@ -77,7 +83,7 @@
     <section class="filters-section">
         <div class="filters-container">
             <h3 data-lang="filters">Filters</h3>
-            
+
             <div class="filter-group">
                 <label data-lang="location">Location</label>
                 <select id="locationFilter" class="filter-select">
@@ -87,7 +93,7 @@
                     <option value="Chicago">Chicago</option>
                 </select>
             </div>
-            
+
             <div class="filter-group">
                 <label data-lang="quality">Quality</label>
                 <select id="qualityFilter" class="filter-select">
@@ -97,7 +103,7 @@
                     <option value="Economy">Economy</option>
                 </select>
             </div>
-            
+
             <div class="filter-group">
                 <label data-lang="price">Price</label>
                 <select id="priceFilter" class="filter-select">
@@ -106,7 +112,7 @@
                     <option value="high-low">High to Low</option>
                 </select>
             </div>
-            
+
             <div class="filter-group">
                 <label data-lang="rating">Rating</label>
                 <select id="ratingFilter" class="filter-select">
@@ -145,15 +151,16 @@
         <div class="modal-content checkout-modal-content">
             <span class="close">&times;</span>
             <h2 data-lang="checkout">Checkout</h2>
-            
+
             <div class="checkout-step">
                 <h3 data-lang="delivery_address">Delivery Address</h3>
                 <form id="addressForm" class="address-form">
-                    <input type="text" id="addressInput" placeholder="Enter address" required data-lang-placeholder="enter_address">
+                    <input type="text" id="addressInput" placeholder="Enter address" required
+                        data-lang-placeholder="enter_address">
                     <button type="submit" class="btn btn-primary" data-lang="confirm_address">Confirm Address</button>
                 </form>
             </div>
-            
+
             <div class="checkout-step">
                 <h3 data-lang="payment_method">Payment Method</h3>
                 <div id="paymentOptions" class="payment-options" style="display:none;">
@@ -171,26 +178,29 @@
     <div id="authModal" class="modal">
         <div class="modal-content auth-modal-content">
             <span class="close">&times;</span>
-            
+
             <div class="auth-tabs">
                 <button class="auth-tab-btn active" id="loginTab" data-lang="login">Login</button>
                 <button class="auth-tab-btn" id="registerTab" data-lang="register">Register</button>
             </div>
-            
+
             <!-- Login Form -->
             <form id="loginForm" class="auth-form active">
-                <input type="text" id="loginIdentity" placeholder="Email or Phone" required data-lang-placeholder="email_or_phone">
-                <input type="password" id="loginPassword" placeholder="Password" required data-lang-placeholder="password">
+                <input type="text" id="loginIdentity" placeholder="Email or Phone" required
+                    data-lang-placeholder="email_or_phone">
+                <input type="password" id="loginPassword" placeholder="Password" required
+                    data-lang-placeholder="password">
                 <button type="submit" class="btn btn-primary" data-lang="login">Login</button>
                 <p id="loginError" class="error-message"></p>
             </form>
-            
+
             <!-- Register Form -->
             <form id="registerForm" class="auth-form">
                 <input type="text" id="regName" placeholder="Full Name" required data-lang-placeholder="full_name">
                 <input type="email" id="regEmail" placeholder="Email" required data-lang-placeholder="email">
                 <input type="text" id="regPhone" placeholder="Phone Number" required data-lang-placeholder="phone">
-                <input type="password" id="regPassword" placeholder="Password" required data-lang-placeholder="password">
+                <input type="password" id="regPassword" placeholder="Password" required
+                    data-lang-placeholder="password">
                 <button type="submit" class="btn btn-primary" data-lang="register">Register</button>
                 <p id="registerError" class="error-message"></p>
             </form>
@@ -202,18 +212,20 @@
         <div class="modal-content profile-modal-content">
             <span class="close">&times;</span>
             <h2 data-lang="profile">User Profile</h2>
-            
+
             <div id="profileInfo" class="profile-info">
                 <p><strong data-lang="name">Name:</strong> <span id="profileName"></span></p>
                 <p><strong data-lang="email">Email:</strong> <span id="profileEmail"></span></p>
                 <p><strong data-lang="phone">Phone:</strong> <span id="profilePhone"></span></p>
-                
+
+
+
                 <div class="profile-edit">
                     <label data-lang="address">Address</label>
                     <textarea id="profileAddress" class="profile-textarea"></textarea>
                 </div>
             </div>
-            
+
             <div class="profile-actions">
                 <button id="saveProfile" class="btn btn-primary" data-lang="save">Save Changes</button>
                 <button id="logoutBtn" class="btn btn-secondary" data-lang="logout">Logout</button>
@@ -225,7 +237,7 @@
     <section class="contact-section" id="contact">
         <div class="contact-container">
             <h2 class="section-title" data-lang="contact_us">Contact Us</h2>
-            
+
             <div class="contact-content">
                 <div class="contact-info">
                     <h3 data-lang="contact_info">Contact Information</h3>
@@ -233,14 +245,15 @@
                     <p><strong data-lang="phone">Phone:</strong> +1-800-SHOP-HUB</p>
                     <p><strong data-lang="address">Address:</strong> 123 Shopping Street, Commerce City, SC 12345</p>
                 </div>
-                
+
                 <form class="contact-form">
                     <input type="text" placeholder="Your Name" required data-lang-placeholder="your_name">
                     <input type="email" placeholder="Your Email" required data-lang-placeholder="your_email">
-                    <textarea placeholder="Your Message" rows="5" required data-lang-placeholder="your_message"></textarea>
+                    <textarea placeholder="Your Message" rows="5" required
+                        data-lang-placeholder="your_message"></textarea>
                     <button type="submit" class="btn btn-primary" data-lang="send">Send Message</button>
                 </form>
-                
+
                 <div class="feedback-section">
                     <h3 data-lang="feedback">Rate Your Experience</h3>
                     <div class="star-rating">
@@ -250,15 +263,17 @@
                         <i class="fas fa-star" data-rating="4"></i>
                         <i class="fas fa-star" data-rating="5"></i>
                     </div>
-                    <textarea class="feedback-text" placeholder="Your feedback..." data-lang-placeholder="feedback_placeholder"></textarea>
+                    <textarea class="feedback-text" placeholder="Your feedback..."
+                        data-lang-placeholder="feedback_placeholder"></textarea>
                 </div>
             </div>
-            
+
             <div class="faq-section">
                 <h3 data-lang="faq">Frequently Asked Questions</h3>
                 <div class="faq-item">
                     <h4 data-lang="faq1_q">How do I track my order?</h4>
-                    <p data-lang="faq1_a">You can track your order using the tracking number sent to your email after purchase.</p>
+                    <p data-lang="faq1_a">You can track your order using the tracking number sent to your email after
+                        purchase.</p>
                 </div>
                 <div class="faq-item">
                     <h4 data-lang="faq2_q">What is your return policy?</h4>
@@ -305,4 +320,5 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
