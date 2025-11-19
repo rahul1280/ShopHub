@@ -1,6 +1,3 @@
-// ============================================
-// LANGUAGE TRANSLATIONS
-// ============================================
 const translations = {
   en: {
     home: "Home",
@@ -319,9 +316,7 @@ const translations = {
   },
 }
 
-// ============================================
-// SAMPLE PRODUCTS DATA
-// ============================================
+
 const products = [
   { id: 1, title: "Premium Headphones", price: 2999, location: "New York", quality: "Premium", rating: 5, image: "public/premium-headphones.jpg" },
   { id: 2, title: "Wireless Mouse", price: 999, location: "Los Angeles", quality: "Standard", rating: 4, image: "public/wireless-mouse.jpg" },
@@ -337,9 +332,65 @@ let currentLanguage = localStorage.getItem("language") || "en"
 let cart = JSON.parse(localStorage.getItem("cart")) || []
 let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null
 
-// ============================================
-// UTILITY FUNCTIONS
-// ============================================
+
+function detectUserLocation() {
+  if (!navigator.geolocation) {
+    console.log("Geolocation is not supported by this browser.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+        .then(res => res.json())
+        .then(data => {
+          const city = data.address?.city || data.address?.town || data.address?.village || "";
+          console.log("Detected city:", city);
+
+          
+          const cityToFilterMap = {
+            "new york": "New York",
+            "manhattan": "New York",
+            "brooklyn": "New York",
+            "los angeles": "Los Angeles",
+            "la": "Los Angeles",
+            "chicago": "Chicago"
+          };
+
+          const normalizedCity = city.toLowerCase();
+          let matchedLocation = null;
+
+          for (const key in cityToFilterMap) {
+            if (normalizedCity.includes(key)) {
+              matchedLocation = cityToFilterMap[key];
+              break;
+            }
+          }
+
+          if (matchedLocation) {
+            $("#locationFilter").val(matchedLocation);
+            applyFilters(); 
+            console.log("Auto-selected location filter:", matchedLocation);
+          }
+        })
+        .catch(err => console.error("Reverse geocoding failed:", err));
+    },
+    (error) => {
+      console.log("Geolocation permission denied or error:", error.message);
+    },
+    { timeout: 10000 }
+  );
+}
+
+
+if (!sessionStorage.getItem("locationDetected")) {
+  detectUserLocation();
+  sessionStorage.setItem("locationDetected", "true");
+}
 function updateUIText() {
   $("[data-lang]").each(function () {
     const key = $(this).data("lang")
@@ -360,9 +411,7 @@ function t(key) {
   return translations[currentLanguage][key] || key
 }
 
-// ============================================
-// AVATAR UPDATE
-// ============================================
+
 function updateAvatar() {
   const $avatar = $("#avatarImg")
   if (currentUser && currentUser.avatar) {
@@ -372,9 +421,7 @@ function updateAvatar() {
   }
 }
 
-// ============================================
-// THEME TOGGLE
-// ============================================
+
 function initTheme() {
   const savedTheme = localStorage.getItem("theme") || "light"
   if (savedTheme === "dark") {
@@ -390,9 +437,7 @@ $("#themeToggle").click(function () {
   $(this).find("i").toggleClass("fa-moon fa-sun")
 })
 
-// ============================================
-// LANGUAGE SELECTOR
-// ============================================
+
 $("#languageSelect").change(function () {
   currentLanguage = $(this).val()
   localStorage.setItem("language", currentLanguage)
@@ -400,9 +445,7 @@ $("#languageSelect").change(function () {
   renderProducts()
 })
 
-// ============================================
-// CART FUNCTIONALITY
-// ============================================
+
 function updateCartCount() {
   const total = cart.reduce((sum, i) => sum + i.quantity, 0)
   $("#cartCount").text(total)
@@ -501,9 +544,7 @@ $("#proceedCheckout").on('click', () => {
   $("#checkoutModal").fadeIn()
 })
 
-// ============================================
-// PRODUCTS RENDERING
-// ============================================
+
 function renderProducts(productsToShow = products) {
   $("#productsList").empty()
 
@@ -536,9 +577,7 @@ function renderProducts(productsToShow = products) {
   })
 }
 
-// ============================================
 // CHECKOUT
-// ============================================
 $("#addressForm").submit((e) => {
   e.preventDefault()
   const address = $("#addressInput").val()
@@ -560,9 +599,7 @@ $("#placeOrder").on('click', () => {
   renderCartModal()
 })
 
-// ============================================
 // AUTHENTICATION
-// ============================================
 $("#userBtn").click(() => {
   if (currentUser) {
     showProfileModal()
@@ -684,9 +721,8 @@ $(document).on("change", "#avatarUpload", function(e) {
   reader.readAsDataURL(file)
 })
 
-// ============================================
+
 // FILTERING
-// ============================================
 function applyFilters() {
   let filtered = [...products]
   const location = $("#locationFilter").val()
@@ -715,18 +751,14 @@ $("#searchInput").on("keyup", function () {
   renderProducts(filtered)
 })
 
-// ============================================
 // CONTACT FORM
-// ============================================
 $(".contact-form").submit(function (e) {
   e.preventDefault()
   alert("Thank you for contacting us! We will respond soon.")
   this.reset()
 })
 
-// ============================================
 // STAR RATING
-// ============================================
 $(".star-rating i").click(function () {
   const rating = $(this).data("rating")
   $(".star-rating i").each(function () {
@@ -734,9 +766,7 @@ $(".star-rating i").click(function () {
   })
 })
 
-// ============================================
 // MODAL CLOSE
-// ============================================
 $(".close").click(function () {
   $(this).closest(".modal").fadeOut()
 })
@@ -747,23 +777,20 @@ $(window).click((event) => {
   }
 })
 
-// ============================================
 // HAMBURGER MENU
-// ============================================
 $("#hamburger").click(() => {
   $(".nav-menu").toggleClass("active")
 })
 
-// ============================================
+
 // HERO BUTTON
-// ============================================
 $(".hero-btn").click(() => {
   $("html, body").animate({ scrollTop: $("#products").offset().top }, 800)
 })
 
-// ============================================
+
 // INITIALIZATION
-// ============================================
+
 $(document).ready(() => {
   initTheme()
   updateUIText()
